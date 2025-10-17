@@ -13,6 +13,8 @@ public partial class Order
 
     public bool? IsPaid { get; set; }
 
+    public int Number { get; set; }
+
     public virtual ICollection<OrderListing> OrderListings { get; set; } = new List<OrderListing>();
 
     public virtual User Owner { get; set; } = null!;
