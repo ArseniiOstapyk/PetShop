@@ -1,4 +1,4 @@
-﻿namespace PetShop.DTO
+﻿namespace PetShop.DTO.Auth
 {
     public class RegisterRequestDto
     {

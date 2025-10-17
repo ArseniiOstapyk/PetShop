@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetShop.DTO;
+using PetShop.DTO.Auth;
 using PetShop.Services;
 
 namespace PetShop.Controller

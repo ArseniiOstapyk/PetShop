@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShop.Data;
 using PetShop.DTO;
+using PetShop.DTO.Auth;
 
 namespace PetShop.Services
 {
