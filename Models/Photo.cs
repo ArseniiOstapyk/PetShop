@@ -11,9 +11,5 @@ public partial class Photo
 
     public string Url { get; set; } = null!;
 
-    public int ListingId { get; set; }
-
-    public virtual Listing Listing { get; set; } = null!;
-
     public virtual ICollection<Listing> Listings { get; set; } = new List<Listing>();
 }

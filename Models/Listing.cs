@@ -33,7 +33,5 @@ public partial class Listing
 
     public virtual Photo? Photo { get; set; }
 
-    public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
-
     public virtual ListingType Type { get; set; } = null!;
 }
