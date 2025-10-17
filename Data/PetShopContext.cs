@@ -24,6 +24,8 @@ public partial class PetShopContext : DbContext
 
     public virtual DbSet<Order> Orders { get; set; }
 
+    public virtual DbSet<OrderListing> OrderListings { get; set; }
+
     public virtual DbSet<Photo> Photos { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -87,13 +89,27 @@ public partial class PetShopContext : DbContext
             entity.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.IsPaid).HasDefaultValue(false);
 
-            entity.HasOne(d => d.Listing).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.ListingId)
-                .HasConstraintName("Orders_ListingId_fkey");
-
             entity.HasOne(d => d.Owner).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.OwnerId)
                 .HasConstraintName("Orders_OwnerId_fkey");
+        });
+
+        modelBuilder.Entity<OrderListing>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("OrderListings_pkey");
+
+            entity.HasOne(d => d.Listing).WithMany(p => p.OrderListings)
+                .HasForeignKey(d => d.ListingId)
+                .HasConstraintName("fk_listing");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderListings)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("fk_order");
+
+            entity.HasOne(d => d.Owner).WithMany(p => p.OrderListings)
+                .HasForeignKey(d => d.OwnerId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_orderlistings_owner");
         });
 
         modelBuilder.Entity<Photo>(entity =>

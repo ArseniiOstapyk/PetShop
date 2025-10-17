@@ -27,7 +27,7 @@ public partial class Listing
 
     public virtual Currency Currency { get; set; } = null!;
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<OrderListing> OrderListings { get; set; } = new List<OrderListing>();
 
     public virtual User Owner { get; set; } = null!;
 
