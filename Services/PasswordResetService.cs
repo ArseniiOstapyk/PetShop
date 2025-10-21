@@ -34,7 +34,7 @@ namespace PetShop.Services
             _context.PasswordResetTokens.Add(resetToken);
             await _context.SaveChangesAsync();
 
-            var resetUrl = $"http://localhost:5170/reset-password?token={token}";
+            var resetUrl = $"http://127.0.0.1:3000/Frontend/password-reset/reset.html?token={token}";
 
             await _emailService.SendAsync(user.Email, "Password Reset",
                 $"Click the link to reset your password: {resetUrl}");
