@@ -26,6 +26,8 @@ public partial class PetShopContext : DbContext
 
     public virtual DbSet<OrderListing> OrderListings { get; set; }
 
+    public virtual DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+
     public virtual DbSet<Photo> Photos { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -86,6 +88,8 @@ public partial class PetShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Orders_pkey");
 
+            entity.HasIndex(e => e.Number, "UX_Orders_Number").IsUnique();
+
             entity.Property(e => e.CreatedOn).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.IsPaid).HasDefaultValue(false);
 
@@ -110,6 +114,19 @@ public partial class PetShopContext : DbContext
                 .HasForeignKey(d => d.OwnerId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_orderlistings_owner");
+        });
+
+        modelBuilder.Entity<PasswordResetToken>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PasswordResetTokens_pkey");
+
+            entity.HasIndex(e => e.Token, "UX_PasswordResetTokens_Token").IsUnique();
+
+            entity.Property(e => e.Token).HasMaxLength(100);
+
+            entity.HasOne(d => d.User).WithMany(p => p.PasswordResetTokens)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("fk_user");
         });
 
         modelBuilder.Entity<Photo>(entity =>

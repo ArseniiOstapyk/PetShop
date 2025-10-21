@@ -16,6 +16,11 @@ namespace PetShop
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<PasswordResetService>();
+
             // Add services to the container.
 
             builder.Services.AddControllers()
