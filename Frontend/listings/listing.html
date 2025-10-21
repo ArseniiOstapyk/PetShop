@@ -10,10 +10,19 @@
   <div class="container">
     <h1 id="listing-name"></h1>
     <img id="listing-photo" class="detail-photo" />
+
+    <!-- ✅ Action buttons -->
+    <div id="action-buttons" class="action-buttons hidden">
+      <button id="edit-btn" class="btn hidden">✏️ Edit</button>
+      <button id="delete-btn" class="btn delete hidden">🗑️ Delete</button>
+    </div>
+
     <p id="listing-description"></p>
     <p><strong>Price:</strong> <span id="listing-price"></span></p>
     <p><strong>Type:</strong> <span id="listing-type"></span></p>
     <p><strong>Currency:</strong> <span id="listing-currency"></span></p>
+
+    <div id="message" class="message"></div>
   </div>
 
   <script src="listing.js"></script>

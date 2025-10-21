@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Listing</title>
+  <link rel="stylesheet" href="edit-listing.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>✏️ Edit Listing</h1>
+
+    <div class="photo-preview">
+      <img id="photo-preview" src="../assets/default-listing.jpg" alt="Listing photo" />
+    </div>
+
+    <form id="listing-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" step="0.01" required />
+      </div>
+
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select id="currency" required></select>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" required></select>
+      </div>
+
+      <div class="form-group">
+        <label for="photo">Change Photo (optional)</label>
+        <input type="file" id="photo" accept="image/*" />
+      </div>
+
+      <div class="form-group checkbox">
+        <label><input type="checkbox" id="isAvailable" /> Available</label>
+      </div>
+
+      <button type="submit" class="btn">💾 Save Changes</button>
+    </form>
+
+    <p id="message" class="message"></p>
+  </div>
+
+  <script src="edit-listing.js"></script>
+</body>
+</html>
