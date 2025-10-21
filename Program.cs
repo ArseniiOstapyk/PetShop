@@ -67,6 +67,8 @@ namespace PetShop
                     };
                 });
 
+            builder.Services.AddScoped<PetShop.Interfaces.ILookupRepository, PetShop.Repositories.LookupRepository>();
+
             builder.Services.AddScoped<JwtService>();
             builder.Services.AddScoped<AuthenticationService>();
 
