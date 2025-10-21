@@ -7,6 +7,7 @@ using PetShop.Services;
 using PetShop.Interfaces;
 using PetShop.Repositories;
 using System.Text.Json.Serialization;
+using Amazon.S3;
 
 namespace PetShop
 {
@@ -20,6 +21,19 @@ namespace PetShop
 
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<PasswordResetService>();
+
+            builder.Services.AddSingleton<IAmazonS3>(sp =>
+            {
+                var config = builder.Configuration.GetSection("Aws");
+                return new AmazonS3Client(
+                    config["AccessKey"],
+                    config["SecretKey"],
+                    Amazon.RegionEndpoint.GetBySystemName(config["Region"])
+                );
+            });
+
+            builder.Services.AddScoped<S3Service>();
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
 
             // Add services to the container.
 

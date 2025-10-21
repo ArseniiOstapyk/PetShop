@@ -33,7 +33,6 @@ namespace PetShop.Services
             }
             catch
             {
-                // Optionally log errors here or rethrow
                 throw;
             }
         }
