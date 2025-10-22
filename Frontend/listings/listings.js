@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Decode user role from JWT
   const payload = parseJwt(token);
   const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let listings = [];
 
   try {
-    // Load listings
     const res = await fetch("http://localhost:5170/api/Listings", {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -32,10 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     listings = await res.json();
     renderTable(listings);
 
-    // Load listing types for filter
     await loadListingTypes();
 
-    // Handle filter change
     typeFilter.addEventListener("change", () => {
       const selectedType = typeFilter.value;
       if (!selectedType) {
@@ -46,11 +42,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   } catch (err) {
-    tableBody.innerHTML = `<tr><td colspan="5">❌ Error: ${err.message}</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="5">Error: ${err.message}</td></tr>`;
   }
 });
 
-// ✅ Decode JWT
 function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1];
@@ -67,7 +62,6 @@ function parseJwt(token) {
   }
 }
 
-// ✅ Render listings into table
 function renderTable(data) {
   const tableBody = document.querySelector("#listings-table tbody");
   if (!data.length) {
@@ -89,7 +83,6 @@ function renderTable(data) {
     .join("");
 }
 
-// ✅ Load types from backend for dropdown
 async function loadListingTypes() {
   const typeFilter = document.getElementById("type-filter");
   try {

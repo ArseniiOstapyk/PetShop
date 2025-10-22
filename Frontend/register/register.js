@@ -7,7 +7,6 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   const confirmPassword = document.getElementById("confirm-password").value.trim();
   const messageBox = document.getElementById("message");
 
-  // ✅ Simple frontend validation
   if (!email || !password || !confirmPassword) {
     messageBox.style.color = "red";
     messageBox.textContent = "❌ Please fill out all required fields.";
@@ -23,9 +22,8 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   messageBox.style.color = "#333";
   messageBox.textContent = "🔄 Registering...";
 
-  // ✅ Build request body dynamically
   const requestBody = { email, password };
-  if (phone) requestBody.phoneNumber = phone; // only include if provided
+  if (phone) requestBody.phoneNumber = phone;
 
   try {
     const response = await fetch("http://localhost:5170/api/Auth/register", {
@@ -43,7 +41,6 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
       throw new Error(errorMsg);
     }
 
-    // ✅ Success
     messageBox.style.color = "green";
     messageBox.textContent = "✅ Registration successful! Redirecting to login...";
     setTimeout(() => (window.location.href = "../login/login.html"), 1500);

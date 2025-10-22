@@ -5,10 +5,9 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value.trim();
   const messageBox = document.getElementById("message");
 
-  // 🧪 Frontend validation
   if (!email || !password) {
     messageBox.style.color = "red";
-    messageBox.textContent = "❌ Please enter both email and password.";
+    messageBox.textContent = "Please enter both email and password.";
     return;
   }
 
@@ -23,7 +22,6 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     });
 
     if (!response.ok) {
-      // Try to parse backend error
       let errorMsg = "Login failed. Please check your credentials.";
       try {
         const errorData = await response.json();
@@ -36,12 +34,10 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
     if (!data.token) throw new Error("No token received from server.");
 
-    // ✅ Save JWT token for future authenticated requests
     localStorage.setItem("jwtToken", data.token);
 
-    // ✅ Feedback + redirect
     messageBox.style.color = "green";
-    messageBox.textContent = "✅ Login successful! Redirecting...";
+    messageBox.textContent = "Login successful! Redirecting...";
     setTimeout(() => {
       window.location.href = "../home/home.html";
     }, 1500);
@@ -53,13 +49,11 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   }
 });
 
-// 🚀 FORGOT PASSWORD LINK HANDLER
 document.getElementById("forgot-link").addEventListener("click", (e) => {
   e.preventDefault();
   window.location.href = "../forgot-password/forgot.html";
 });
 
-// 🚀 REGISTER LINK HANDLER (optional safety, though <a> already does it)
 document.getElementById("register-link").addEventListener("click", (e) => {
   e.preventDefault();
   window.location.href = "../register/register.html";

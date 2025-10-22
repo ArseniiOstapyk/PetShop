@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("listing-photo").src =
       listing.photoUrl || "../assets/default-listing.jpg";
 
-    // ✅ Decode user info from JWT
     const user = parseJwt(token);
     const role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
     const userId = parseInt(
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const actionSection = document.getElementById("action-buttons");
     const msg = document.getElementById("message");
 
-    // ✅ Seller or Admin can edit/delete
     if (role === "Admin" || (role === "Seller" && listing.ownerId === userId)) {
       actionSection.classList.remove("hidden");
       editBtn.classList.remove("hidden");
@@ -50,7 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       deleteBtn.addEventListener("click", () => handleDelete(id, token));
     }
 
-    // ✅ Users can order
     if (role === "User") {
       actionSection.classList.remove("hidden");
       orderBtn.classList.remove("hidden");
@@ -61,7 +58,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         msg.style.color = "#444";
 
         try {
-          // ✅ Correct endpoint & payload
           const addRes = await fetch("http://localhost:5170/api/Orders/items", {
             method: "POST",
             headers: {
@@ -77,15 +73,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
 
           const data = await addRes.json();
-          msg.textContent = "✅ Listing added to your order!";
+          msg.textContent = "Listing added to your order!";
           msg.style.color = "green";
 
-          // Redirect to order detail page
           setTimeout(() => {
             window.location.href = `../orders/order.html?id=${data.id}`;
           }, 1200);
         } catch (err) {
-          console.error("❌ Add to order error:", err);
+          console.error("Add to order error:", err);
           msg.textContent = "❌ " + err.message;
           msg.style.color = "red";
         }
@@ -96,7 +91,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// ✅ Decode JWT safely
 function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1];
@@ -113,7 +107,6 @@ function parseJwt(token) {
   }
 }
 
-// ✅ Delete listing
 async function handleDelete(id, token) {
   if (!confirm("Are you sure you want to delete this listing?")) return;
 
@@ -129,7 +122,7 @@ async function handleDelete(id, token) {
 
     if (!res.ok) throw new Error(await res.text());
 
-    msg.textContent = "✅ Listing deleted successfully!";
+    msg.textContent = "Listing deleted successfully!";
     msg.style.color = "green";
 
     setTimeout(() => {

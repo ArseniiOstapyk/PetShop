@@ -21,11 +21,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     allOrders = await res.json();
     renderTable(allOrders);
   } catch (err) {
-    console.error("❌ Orders load error:", err);
+    console.error("Orders load error:", err);
     messageBox.textContent = "❌ " + err.message;
   }
 
-  // ✅ Filter logic
   filterSelect.addEventListener("change", () => {
     const value = filterSelect.value;
     let filtered = allOrders;

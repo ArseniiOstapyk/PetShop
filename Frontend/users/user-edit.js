@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
   if (role !== "Admin") {
-    document.body.innerHTML = "<h2>❌ Access denied. Admins only.</h2>";
+    document.body.innerHTML = "<h2>Access denied. Admins only.</h2>";
     return;
   }
 
@@ -28,20 +28,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const messageBox = document.getElementById("message");
 
   try {
-    // ✅ Fetch user info
     const res = await fetch(`http://localhost:5170/api/Users/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error("User not found");
     const user = await res.json();
 
-    // ✅ Display user info
     userIdEl.textContent = user.id;
     userEmailEl.textContent = user.email;
     userPhoneEl.textContent = user.phoneNumber || "-";
     userRoleEl.textContent = user.roleName || user.role || "-";
 
-    // ✅ Load available roles
     const rolesRes = await fetch("http://localhost:5170/api/Lookup/Roles", {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -57,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       )
       .join("");
 
-    // ✅ Save button handler
    saveBtn.addEventListener("click", async () => {
   const newRoleName = roleSelect.options[roleSelect.selectedIndex].text;
   if (!newRoleName) {
@@ -75,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: newRoleName }), // ✅ send by name, not ID
+      body: JSON.stringify({ role: newRoleName }),
     });
 
     if (!updateRes.ok) {
@@ -83,24 +79,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error(errText);
     }
 
-    messageBox.textContent = "✅ User role updated successfully!";
+    messageBox.textContent = "User role updated successfully!";
     messageBox.style.color = "green";
     setTimeout(() => {
       window.location.href = "users.html";
     }, 1200);
   } catch (err) {
-    console.error("❌ Update error:", err);
+    console.error("Update error:", err);
     messageBox.textContent = "❌ " + err.message;
     messageBox.style.color = "red";
   }
 });
 
-    // ✅ Cancel → go back
     cancelBtn.addEventListener("click", () => {
       window.location.href = "users.html";
     });
   } catch (err) {
-    console.error("❌ Load user error:", err);
+    console.error("Load user error:", err);
     document.body.innerHTML = `<h2>❌ ${err.message}</h2>`;
   }
 });

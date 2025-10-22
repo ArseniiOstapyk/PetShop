@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
   if (role !== "Admin") {
-    document.body.innerHTML = "<h2>❌ Access denied. Admins only.</h2>";
+    document.body.innerHTML = "<h2>Access denied. Admins only.</h2>";
     return;
   }
 
@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let allUsers = [];
 
   try {
-    // ✅ Load Roles for filter dropdown
     const rolesRes = await fetch("http://localhost:5170/api/Lookup/Roles", {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       `<option value="">All Roles</option>` +
       roles.map((r) => `<option value="${r.name}">${r.name}</option>`).join("");
 
-    // ✅ Load Users
     const res = await fetch("http://localhost:5170/api/Users", {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -44,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     allUsers = await res.json();
     renderUsers(allUsers);
 
-    // ✅ Filtering logic
     roleFilter.addEventListener("change", () => {
       const selectedRole = roleFilter.value;
       const filtered =
@@ -58,11 +55,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderUsers(filtered);
     });
   } catch (err) {
-    console.error("❌ Load users error:", err);
+    console.error("Load users error:", err);
     messageBox.textContent = "❌ " + err.message;
   }
 
-  // ✅ Render Table
   function renderUsers(users) {
     if (!users.length) {
       tableBody.innerHTML = `<tr><td colspan="7">No users found.</td></tr>`;
@@ -87,9 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     attachEventHandlers();
   }
 
-  // ✅ Event handlers for actions
   function attachEventHandlers() {
-    // Click to edit
     document.querySelectorAll("#users-table tbody tr").forEach((row) => {
       row.addEventListener("click", (e) => {
         if (
@@ -102,7 +96,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
 
-    // Delete buttons
     document.querySelectorAll(".action-delete").forEach((btn) =>
       btn.addEventListener("click", async (e) => {
         e.stopPropagation();
@@ -112,7 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       })
     );
 
-    // Select All
     selectAll.addEventListener("change", () => {
       document
         .querySelectorAll(".user-checkbox")
@@ -120,12 +112,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       toggleRemoveButton();
     });
 
-    // Checkbox toggle
     document.addEventListener("change", (e) => {
       if (e.target.classList.contains("user-checkbox")) toggleRemoveButton();
     });
 
-    // Delete selected
     removeSelectedBtn.addEventListener("click", async () => {
       const selectedIds = Array.from(
         document.querySelectorAll(".user-checkbox:checked")
@@ -151,7 +141,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ✅ Toggle remove button visibility
   function toggleRemoveButton() {
     const anyChecked =
       document.querySelectorAll(".user-checkbox:checked").length > 0;
@@ -160,7 +149,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     removeSelectedBtn.style.cursor = anyChecked ? "pointer" : "not-allowed";
   }
 
-  // ✅ Delete function
   async function deleteUser(id, reload = true) {
     try {
       const delRes = await fetch(`http://localhost:5170/api/Users/${id}`, {
@@ -170,11 +158,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!delRes.ok) throw new Error(await delRes.text());
 
       if (reload) {
-        alert("✅ User deleted successfully!");
+        alert("User deleted successfully!");
         window.location.reload();
       }
     } catch (err) {
-      console.error("❌ Delete user error:", err);
+      console.error("Delete user error:", err);
       messageBox.textContent = "❌ " + err.message;
       messageBox.style.color = "red";
     }

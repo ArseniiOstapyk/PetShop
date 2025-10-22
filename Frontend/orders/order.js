@@ -8,13 +8,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Decode JWT safely
   const payload = JSON.parse(atob(token.split(".")[1]));
   const currentUserId =
     parseInt(payload.nameid) ||
     parseInt(payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
 
-  // DOM references
   const numberEl = document.getElementById("order-number");
   const dateEl = document.getElementById("order-date");
   const paidEl = document.getElementById("order-paid");
@@ -36,14 +34,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const order = await res.json();
 
-    // ✅ Fill header
     numberEl.textContent = order.number;
     dateEl.textContent = new Date(order.createdOn).toLocaleString();
     paidEl.textContent = order.isPaid ? "✅ Yes" : "❌ No";
     itemsEl.textContent = order.listingsCount;
     sumEl.textContent = order.totalSum.toFixed(2);
 
-    // ✅ Build table rows with checkboxes
     tableBody.innerHTML = order.items
       .map(
         (i) => `
@@ -56,12 +52,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       )
       .join("");
 
-    // ✅ Buttons are visible for any role (ownership check is on backend)
     markPaidBtn.classList.toggle("hidden", order.isPaid);
     removeSelectedBtn.classList.remove("hidden");
     deleteBtn.classList.remove("hidden");
 
-    // ✅ "Select All" toggle
     selectAll.addEventListener("change", () => {
       document
         .querySelectorAll(".item-checkbox")
@@ -69,7 +63,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       toggleRemoveButton();
     });
 
-    // ✅ Enable / disable Remove button dynamically
     document.addEventListener("change", (e) => {
       if (e.target.classList.contains("item-checkbox")) toggleRemoveButton();
     });
@@ -82,7 +75,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     toggleRemoveButton();
 
-    // ✅ Remove selected items
     removeSelectedBtn.addEventListener("click", async () => {
       const selectedIds = Array.from(document.querySelectorAll(".item-checkbox:checked")).map(
         (cb) => cb.dataset.id
@@ -106,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (!delRes.ok) throw new Error(await delRes.text());
         }
 
-        messageBox.textContent = "✅ Selected items removed!";
+        messageBox.textContent = "Selected items removed!";
         messageBox.style.color = "green";
         setTimeout(() => window.location.reload(), 800);
       } catch (err) {
@@ -115,7 +107,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    // ✅ Mark as Paid
     markPaidBtn.addEventListener("click", async () => {
       if (!confirm("Mark this order as paid?")) return;
 
@@ -126,11 +117,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (!paidRes.ok) throw new Error(await paidRes.text());
 
-      alert("✅ Order marked as paid!");
+      alert("Order marked as paid!");
       window.location.reload();
     });
 
-    // ✅ Delete order
     deleteBtn.addEventListener("click", async () => {
       if (!confirm("Are you sure you want to delete this order?")) return;
 
@@ -145,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.href = "orders.html";
     });
   } catch (err) {
-    console.error("❌ Order load error:", err);
+    console.error("Order load error:", err);
     messageBox.textContent = "❌ " + err.message;
   }
 });

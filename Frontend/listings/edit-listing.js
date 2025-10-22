@@ -6,13 +6,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Load everything
   await loadListingData(id);
   document.getElementById("listing-form").addEventListener("submit", (e) => handleSubmit(e, id));
   document.getElementById("photo").addEventListener("change", previewPhoto);
 });
 
-// ✅ Preview selected photo
 function previewPhoto(e) {
   const file = e.target.files[0];
   if (file) {
@@ -24,7 +22,6 @@ function previewPhoto(e) {
   }
 }
 
-// ✅ Load currencies
 async function loadCurrencies(selectedId = null, selectedName = null) {
   const select = document.getElementById("currency");
   const res = await fetch("http://localhost:5170/api/Lookup/Currencies");
@@ -37,7 +34,6 @@ async function loadCurrencies(selectedId = null, selectedName = null) {
     select.appendChild(opt);
   });
 
-  // Try matching by ID first, then by name
   if (selectedId) select.value = selectedId;
   else if (selectedName) {
     const match = Array.from(select.options).find(o => o.text.includes(selectedName));
@@ -45,7 +41,6 @@ async function loadCurrencies(selectedId = null, selectedName = null) {
   }
 }
 
-// ✅ Load listing types
 async function loadListingTypes(selectedId = null, selectedName = null) {
   const select = document.getElementById("type");
   const res = await fetch("http://localhost:5170/api/Lookup/ListingTypes");
@@ -58,7 +53,6 @@ async function loadListingTypes(selectedId = null, selectedName = null) {
     select.appendChild(opt);
   });
 
-  // Try matching by ID first, then by name
   if (selectedId) select.value = selectedId;
   else if (selectedName) {
     const match = Array.from(select.options).find(o => o.text === selectedName);
@@ -66,7 +60,6 @@ async function loadListingTypes(selectedId = null, selectedName = null) {
   }
 }
 
-// ✅ Load listing data
 async function loadListingData(id) {
   const token = localStorage.getItem("jwtToken");
   const res = await fetch(`http://localhost:5170/api/Listings/${id}`, {
@@ -81,23 +74,19 @@ async function loadListingData(id) {
 
   const data = await res.json();
 
-  // Fill text fields
   document.getElementById("name").value = data.name || "";
   document.getElementById("description").value = data.description || "";
   document.getElementById("price").value = data.price || "";
   document.getElementById("isAvailable").checked = data.isAvailable || false;
 
-  // Load dropdowns AFTER we know what to select
   await loadCurrencies(data.currencyId, data.currency);
   await loadListingTypes(data.typeId, data.type);
 
-  // Set photo
   const photoPreview = document.getElementById("photo-preview");
   if (data.photoUrl) photoPreview.src = data.photoUrl;
   else photoPreview.src = "../assets/default-listing.jpg";
 }
 
-// ✅ Submit PUT update
 async function handleSubmit(e, id) {
   e.preventDefault();
   const msg = document.getElementById("message");
@@ -107,7 +96,6 @@ async function handleSubmit(e, id) {
   const token = localStorage.getItem("jwtToken");
 
   try {
-    // Upload new photo if chosen
     let photoId = null;
     const photo = document.getElementById("photo").files[0];
     if (photo) {
@@ -143,7 +131,7 @@ async function handleSubmit(e, id) {
 
     if (!res.ok) throw new Error(await res.text());
 
-    msg.textContent = "✅ Listing updated successfully!";
+    msg.textContent = "Listing updated successfully!";
     msg.style.color = "green";
     setTimeout(() => (window.location.href = `listing.html?id=${id}`), 1500);
   } catch (err) {
