@@ -86,3 +86,42 @@ input:focus, textarea:focus, select:focus {
   font-weight: 500;
   color: #333;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 25px;
+    max-width: 90%;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  input, textarea, select {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  input, textarea, select {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+  }
+}

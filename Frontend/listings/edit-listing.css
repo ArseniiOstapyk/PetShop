@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
 body {
   font-family: 'Inter', sans-serif;
   background: #f9fafc;
@@ -87,4 +89,53 @@ textarea {
   margin-top: 15px;
   text-align: center;
   font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 25px;
+    max-width: 90%;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .photo-preview img {
+    width: 200px;
+    height: 200px;
+  }
+
+  input, textarea, select {
+    font-size: 0.95rem;
+    padding: 9px;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .photo-preview img {
+    width: 160px;
+    height: 160px;
+  }
+
+  input, textarea, select {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+  }
 }

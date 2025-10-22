@@ -129,3 +129,63 @@ input[type="checkbox"] {
 .filter-dropdown:hover {
   border-color: #fc575e;
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  .container {
+    padding: 25px;
+    max-width: 95%;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .btn, .filter-dropdown {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .action-delete {
+    padding: 5px 8px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .btn, .filter-dropdown {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    font-size: 0.9rem;
+  }
+}

@@ -21,6 +21,8 @@ body {
   padding: 15px 40px;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .navbar .logo {
@@ -33,6 +35,8 @@ body {
   list-style: none;
   display: flex;
   gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-links a {
@@ -92,4 +96,56 @@ body {
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   border: 4px solid white;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logout-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .container {
+    padding: 30px 20px;
+  }
+
+  .container h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .dog-photo {
+    width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .logo {
+    font-size: 1.3rem;
+  }
+
+  .container h1 {
+    font-size: 1.3rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .dog-photo {
+    width: 180px;
+  }
 }

@@ -89,3 +89,52 @@ select {
   margin-top: 20px;
   color: #555;
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  .container {
+    padding: 25px;
+    max-width: 90%;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  select {
+    font-size: 0.95rem;
+    padding: 9px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  select {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+}

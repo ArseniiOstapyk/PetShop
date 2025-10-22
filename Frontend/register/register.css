@@ -113,3 +113,53 @@ input:focus {
     transform: translateY(0);
   }
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .register-card {
+    max-width: 90%;
+    padding: 30px 25px;
+  }
+
+  .title {
+    font-size: 1.7rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 25px 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  input {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .login-text {
+    font-size: 0.9rem;
+  }
+}
