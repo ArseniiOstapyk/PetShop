@@ -27,5 +27,12 @@ namespace PetShop.Controllers
             var types = await _repository.GetListingTypesAsync();
             return Ok(types);
         }
+
+        [HttpGet("Roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _repository.GetRolesAsync();
+            return Ok(roles);
+        }
     }
 }

@@ -37,5 +37,17 @@ namespace PetShop.Repositories
                 })
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<RoleDto>> GetRolesAsync()
+        {
+            return await _context.Roles
+                .Select(r => new RoleDto
+                {
+                    Id = r.Id,
+                    Name = r.Name!
+                })
+                .OrderBy(r => r.Name)
+                .ToListAsync();
+        }
     }
 }

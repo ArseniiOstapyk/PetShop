@@ -6,5 +6,6 @@ namespace PetShop.Interfaces
     {
         Task<IEnumerable<CurrencyDto>> GetCurrenciesAsync();
         Task<IEnumerable<ListingTypeDto>> GetListingTypesAsync();
+        Task<IEnumerable<RoleDto>> GetRolesAsync();
     }
 }
