@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Details – PetShop</title>
+  <link rel="stylesheet" href="order.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Order Details</h1>
+
+    <div id="order-header">
+      <p><strong>Order Number:</strong> <span id="order-number"></span></p>
+      <p><strong>Created On:</strong> <span id="order-date"></span></p>
+      <p><strong>Is Paid:</strong> <span id="order-paid"></span></p>
+      <p><strong>Total Items:</strong> <span id="order-items"></span></p>
+      <p><strong>Total Sum:</strong> <span id="order-sum"></span></p>
+    </div>
+
+    <div class="actions" id="order-actions">
+      <button id="mark-paid-btn" class="btn btn-green hidden">Mark as Paid</button>
+      <button id="remove-selected-btn" class="btn btn-red hidden">🗑️ Remove Selected</button>
+      <button id="delete-btn" class="btn btn-red hidden">Delete Order</button>
+    </div>
+
+    <table id="items-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="select-all" /></th>
+          <th>Listing</th>
+          <th>Price</th>
+          <th>Seller Email</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <p id="message" class="message"></p>
+  </div>
+
+  <script src="order.js"></script>
+</body>
+</html>

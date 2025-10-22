@@ -10,12 +10,22 @@
   <div class="container">
     <h1>📦 My Orders</h1>
 
+    <div class="filter-bar">
+      <label for="paid-filter"><strong>Filter by Payment Status:</strong></label>
+      <select id="paid-filter">
+        <option value="">All</option>
+        <option value="paid">Paid</option>
+        <option value="unpaid">Unpaid</option>
+      </select>
+    </div>
+
     <table id="orders-table">
       <thead>
         <tr>
           <th>Number</th>
           <th>Is Paid</th>
           <th>Total Items</th>
+          <th>Total Sum</th>
         </tr>
       </thead>
       <tbody></tbody>

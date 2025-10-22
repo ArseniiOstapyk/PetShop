@@ -24,16 +24,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("listing-photo").src =
       listing.photoUrl || "../assets/default-listing.jpg";
 
-    // ✅ Show action buttons if authorized
+    // ✅ Decode user info from JWT
     const user = parseJwt(token);
     const role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    const userId = parseInt(user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
+    const userId = parseInt(
+      user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
+    );
 
     const editBtn = document.getElementById("edit-btn");
     const deleteBtn = document.getElementById("delete-btn");
+    const orderBtn = document.getElementById("order-btn");
+    const actionSection = document.getElementById("action-buttons");
+    const msg = document.getElementById("message");
 
+    // ✅ Seller or Admin can edit/delete
     if (role === "Admin" || (role === "Seller" && listing.ownerId === userId)) {
-      document.getElementById("action-buttons").classList.remove("hidden");
+      actionSection.classList.remove("hidden");
       editBtn.classList.remove("hidden");
       deleteBtn.classList.remove("hidden");
 
@@ -42,6 +48,48 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       deleteBtn.addEventListener("click", () => handleDelete(id, token));
+    }
+
+    // ✅ Users can order
+    if (role === "User") {
+      actionSection.classList.remove("hidden");
+      orderBtn.classList.remove("hidden");
+
+      orderBtn.addEventListener("click", async () => {
+        if (!confirm("Add this listing to your order?")) return;
+        msg.textContent = "Adding to order...";
+        msg.style.color = "#444";
+
+        try {
+          // ✅ Correct endpoint & payload
+          const addRes = await fetch("http://localhost:5170/api/Orders/items", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ listingId: parseInt(id) }),
+          });
+
+          if (!addRes.ok) {
+            const errText = await addRes.text();
+            throw new Error(errText);
+          }
+
+          const data = await addRes.json();
+          msg.textContent = "✅ Listing added to your order!";
+          msg.style.color = "green";
+
+          // Redirect to order detail page
+          setTimeout(() => {
+            window.location.href = `../orders/order.html?id=${data.id}`;
+          }, 1200);
+        } catch (err) {
+          console.error("❌ Add to order error:", err);
+          msg.textContent = "❌ " + err.message;
+          msg.style.color = "red";
+        }
+      });
     }
   } catch (err) {
     document.body.innerHTML = `<h2>❌ ${err.message}</h2>`;
