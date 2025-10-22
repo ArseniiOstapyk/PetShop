@@ -6,7 +6,7 @@ document.getElementById("forgot-form").addEventListener("submit", async (e) => {
 
   if (!email) {
     messageBox.style.color = "red";
-    messageBox.textContent = "❌ Please enter your email.";
+    messageBox.textContent = "Please enter your email.";
     return;
   }
 
@@ -31,7 +31,7 @@ document.getElementById("forgot-form").addEventListener("submit", async (e) => {
 
     // ✅ Success
     messageBox.style.color = "green";
-    messageBox.textContent = "✅ If this email exists, a reset link has been sent.";
+    messageBox.textContent = "If this email exists, a reset link has been sent.";
   } catch (error) {
     console.error("Forgot password error:", error);
     messageBox.style.color = "red";

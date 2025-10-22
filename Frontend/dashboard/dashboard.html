@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Dashboard – PetShop</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🏪 Seller Dashboard</h1>
+
+    <!-- DASHBOARD CARDS -->
+    <div class="dashboard-cards">
+      <div class="card">
+        <h2>Total Listings</h2>
+        <p id="total-listings">0</p>
+      </div>
+      <div class="card">
+        <h2>Total Sum</h2>
+        <p id="total-sum">$0.00</p>
+      </div>
+    </div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <select id="type-filter">
+        <option value="">All Types</option>
+      </select>
+      <button id="add-new-btn" class="btn">+ Add New</button>
+    </div>
+
+    <!-- LISTINGS TABLE -->
+    <table id="listings-table">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Currency</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <p id="message" class="message"></p>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
