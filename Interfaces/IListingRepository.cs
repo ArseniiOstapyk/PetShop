@@ -7,7 +7,7 @@ namespace PetShop.Interfaces
     {
         Task<IEnumerable<ListingDto>> GetAllAsync();
         Task<ListingDto?> GetByIdAsync(int id);
-        Task<ListingDto> AddAsync(CreateListingDto dto, int ownerId); // ✅ ownerId added
+        Task<ListingDto> AddAsync(CreateListingDto dto, int ownerId);
         Task<ListingDto?> UpdateAsync(int id, UpdateListingDto dto);
         Task<bool> DeleteAsync(int id);
     }

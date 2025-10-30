@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:17
+    container_name: petshop-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: PetShop
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./dbbackup.sql:/docker-entrypoint-initdb.d/dbbackup.sql
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    container_name: petshop-app
+    ports:
+      - "5170:5170"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://0.0.0.0:5170
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_CONNECTION: Host=db;Port=5432;Database=PetShop;Username=postgres;Password=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["./wait-for-db.sh", "dotnet", "PetShop.dll"]
+
+volumes:
+  dbdata:

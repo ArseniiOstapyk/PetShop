@@ -17,6 +17,6 @@
         public int ListingId { get; set; }
         public string ListingName { get; set; } = null!;
         public double Price { get; set; }
-        public string? SellerEmail { get; set; } // OwnerId in OrderListings is nullable
+        public string? SellerEmail { get; set; }
     }
 }

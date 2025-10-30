@@ -33,7 +33,7 @@ namespace PetShop.Repositories
                     IsAvailable = l.IsAvailable,
                     Owner = l.Owner.Email,
                     PhotoUrl = l.Photo != null ? l.Photo.Url : null,
-                    OwnerId = l.OwnerId // ✅ include for checks
+                    OwnerId = l.OwnerId
                 })
                 .ToListAsync();
         }
@@ -57,7 +57,7 @@ namespace PetShop.Repositories
                     IsAvailable = l.IsAvailable,
                     Owner = l.Owner.Email,
                     PhotoUrl = l.Photo != null ? l.Photo.Url : null,
-                    OwnerId = l.OwnerId // ✅ included here too
+                    OwnerId = l.OwnerId
                 })
                 .FirstOrDefaultAsync();
         }

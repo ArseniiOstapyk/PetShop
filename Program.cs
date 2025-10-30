@@ -47,8 +47,19 @@ namespace PetShop
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //builder.Services.AddDbContext<PetShopContext>(options =>
+            //    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            var dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
+            var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
+            var dbName = "PetShop";
+            var dbUser = "postgres";
+            var dbPass = "postgres";
+
+            var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPass}";
+
             builder.Services.AddDbContext<PetShopContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionString));
 
             var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
@@ -137,6 +148,7 @@ namespace PetShop
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
 
             app.MapControllers();
 
