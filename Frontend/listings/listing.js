@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       deleteBtn.addEventListener("click", () => handleDelete(id, token));
     }
 
-    if (role === "User") {
+    if (role === "User" || role === "Admin" || role === "Seller") {
       actionSection.classList.remove("hidden");
       orderBtn.classList.remove("hidden");
 

@@ -55,7 +55,6 @@ namespace PetShop.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateListingDto dto)
         {
-            // ✅ Extract user info from token
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var roleClaim = User.FindFirst(ClaimTypes.Role);
 
@@ -65,11 +64,9 @@ namespace PetShop.Controllers
             int userId = int.Parse(userIdClaim.Value);
             string role = roleClaim.Value;
 
-            // ✅ Allow only Seller
             if (role != "Seller")
                 return Forbid("Only sellers can update listings.");
 
-            // ✅ Check ownership
             var listing = await _listingRepo.GetByIdAsync(id);
             if (listing == null)
                 return NotFound("Listing not found.");
@@ -84,7 +81,6 @@ namespace PetShop.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            // ✅ Extract user info from token
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var roleClaim = User.FindFirst(ClaimTypes.Role);
 
@@ -94,12 +90,10 @@ namespace PetShop.Controllers
             int userId = int.Parse(userIdClaim.Value);
             string role = roleClaim.Value;
 
-            // ✅ Get listing
             var listing = await _listingRepo.GetByIdAsync(id);
             if (listing == null)
                 return NotFound("Listing not found.");
 
-            // ✅ Allow if Admin OR Seller + Owner
             if (role != "Admin" && !(role == "Seller" && listing.OwnerId == userId))
                 return Forbid("You are not authorized to delete this listing.");
 
